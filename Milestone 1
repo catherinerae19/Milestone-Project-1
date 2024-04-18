@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crossy Road</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Constants
+    const SCREEN_WIDTH = canvas.width;
+    const SCREEN_HEIGHT = canvas.height;
+    const PLAYER_SIZE = 30;
+    const PLAYER_SPEED = 5;
+    const CAR_WIDTH = 50;
+    const CAR_HEIGHT = 30;
+
+    // Player object
+    const player = {
+      x: SCREEN_WIDTH / 2,
+      y: SCREEN_HEIGHT - 50,
+      width: PLAYER_SIZE,
+      height: PLAYER_SIZE,
+      color: 'green',
+      move(direction) {
+        switch (direction) {
+          case 'up':
+            this.y -= PLAYER_SPEED;
+            break;
+          case 'down':
+            this.y += PLAYER_SPEED;
+            break;
+          case 'left':
+            this.x -= PLAYER_SPEED;
+            break;
+          case 'right':
+            this.x += PLAYER_SPEED;
+            break;
+        }
+      }
+    };
+
+    // Car object
+    class Car {
+      constructor(x, y, speed) {
+        this.x = x;
+        this.y = y;
+        this.width = CAR_WIDTH;
+        this.height = CAR_HEIGHT;
+        this.speed = speed;
+      }
+
+      move() {
+        this.x += this.speed;
+        if (this.x > SCREEN_WIDTH) {
+          this.x = -this.width;
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+    }
+
+    // Initialize cars
+    const cars = [];
+    function spawnCars() {
+      for (let i = 0; i < 5; i++) {
+        const car = new Car(Math.random() * SCREEN_WIDTH, Math.random() * 400 + 100, Math.random() * 4 + 2);
+        cars.push(car);
+      }
+    }
+    spawnCars();
+
+    // Game loop
+    function gameLoop() {
+      // Clear canvas
+      ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+      // Draw player
+      ctx.fillStyle = player.color;
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+
+      // Move and draw cars
+      cars.forEach(car => {
+        car.move();
+        car.draw();
+
+        // Check collision
+        if (player.x < car.x + car.width &&
+            player.x + player.width > car.x &&
+            player.y < car.y + car.height &&
+            player.y + player.height > car.y) {
+          // Collision occurred
+          gameOver();
+        }
+      });
+
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+
+    // Handle keyboard input
+    document.addEventListener('keydown', event => {
+      switch (event.key) {
+        case 'ArrowUp':
+          player.move('up');
+          break;
+        case 'ArrowDown':
+          player.move('down');
+          break;
+        case 'ArrowLeft':
+          player.move('left');
+          break;
+        case 'ArrowRight':
+          player.move('right');
+          break;
+      }
+    });
+
+    // Game over function
+    function gameOver() {
+      alert('Game Over!');
+      location.reload(); // Reload the page to restart the game
+    }
+  </script>
+</body>
+</html>
