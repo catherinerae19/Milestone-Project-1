@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crossy Road</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="gameplay.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="https://fontmeme.com/3d-fonts/"><img src="https://fontmeme.com/permalink/240424/9ea942c47be03fb7eeb253442853fd1b.png" alt="3d-fonts" border="0"></a>
+        </div>   
+        <div class="description">    
+            <p>Use the arrow keys to move the cube in different directions, avoiding obstacles along the way. Good luck!</p>
+        </div>
+        <div class="button">
+            <! -- Title: (Learn HTML buttons in 5 minutes!) * Author: (Code, Bro) * Date: (2023) * Code version: (v1) * Availability: (https://www.youtube.com/watch?v=tDqTXipQmBU) -- >
+            <a href="otherpage.html">
+            <button style="font-size:25px; background-color: green; color: white; border-radius: 8px;">START</button>
+        </div>
+    </a>
+        </div>
+        
+    </body>
+</html>
